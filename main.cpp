@@ -37,7 +37,7 @@ int main()
 	getline(fin, starting_info);
 	fout << starting_info << endl;
 	getline(fin, starting_info, ' ');
-	fout << starting_info;
+	fout << starting_info << ' ';
 	getline(fin, starting_info);
 	fout << starting_info << endl;	
 	getline(fin, starting_info);
@@ -54,7 +54,7 @@ int main()
 	}
 
 	vector<string> numbers{};
-
+	vector<string> separated{};
 	int i = 0;
 	string number;
 
@@ -66,11 +66,22 @@ int main()
 		{
 			getline(ss, number, ' ');
 
-			numbers.push_back(number);
+			separated.push_back(number);
 		}
 
 		i++;
 	}
+	i = 0;
+
+	while (i < (separated.size() -1))
+	{
+		if (separated[i] != " " && separated[i] != "")
+		{
+			numbers.push_back(separated[i]);
+		}
+		i++;
+	}
+
 
 	i = 0;
 	if (set_effect == 1)
