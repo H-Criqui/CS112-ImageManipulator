@@ -12,76 +12,76 @@ using namespace std;
 int main()
 {
 
-/*  
-	srand(time(NULL));
-	string temp;
-	string file_name;
-	string out_file_name;
-	int set_effect;
-	cout << "What .ppm file should I open?" << endl;
-	cin >> file_name;
-	cout << endl;
-	cout << "What file should be our destination?" << endl;
-	cin >> out_file_name;
-	
+	/*
+		srand(time(NULL));
+		string temp;
+		string file_name;
+		string out_file_name;
+		int set_effect;
+		cout << "What .ppm file should I open?" << endl;
+		cin >> file_name;
+		cout << endl;
+		cout << "What file should be our destination?" << endl;
+		cin >> out_file_name;
 
-	ofstream fout;
-	fout.open(out_file_name);
-	ifstream fin;
-	fin.open(file_name);
-	
-	fout.good();
 
-	string starting_info;
+		ofstream fout;
+		fout.open(out_file_name);
+		ifstream fin;
+		fin.open(file_name);
 
-	getline(fin, starting_info);
-	fout << starting_info << endl;
-	getline(fin, starting_info, ' ');
-	fout << starting_info << ' ';
-	getline(fin, starting_info);
-	fout << starting_info << endl;	
-	getline(fin, starting_info);
-	fout << starting_info << endl;
+		fout.good();
 
-	
-	vector<string> data{};
+		string starting_info;
 
-	while (fin.good() == true)
-	{
-		getline(fin, temp);
+		getline(fin, starting_info);
+		fout << starting_info << endl;
+		getline(fin, starting_info, ' ');
+		fout << starting_info << ' ';
+		getline(fin, starting_info);
+		fout << starting_info << endl;
+		getline(fin, starting_info);
+		fout << starting_info << endl;
 
-		data.push_back(temp);
-	}
 
-	vector<string> numbers{};
-	vector<string> separated{};
-	int i = 0;
-	string number;
+		vector<string> data{};
 
-	while (i < (data.size()-1))
-	{
-		stringstream ss;
-		ss << data[i];
-		while (ss.good() == true)
+		while (fin.good() == true)
 		{
-			getline(ss, number, ' ');
+			getline(fin, temp);
 
-			separated.push_back(number);
+			data.push_back(temp);
 		}
 
-		i++;
-	}
-	i = 0;
+		vector<string> numbers{};
+		vector<string> separated{};
+		int i = 0;
+		string number;
 
-	while (i < (separated.size() -1))
-	{
-		if (separated[i] != " " && separated[i] != "")
+		while (i < (data.size()-1))
 		{
-			numbers.push_back(separated[i]);
+			stringstream ss;
+			ss << data[i];
+			while (ss.good() == true)
+			{
+				getline(ss, number, ' ');
+
+				separated.push_back(number);
+			}
+
+			i++;
 		}
-		i++;
-	}
-	*/
+		i = 0;
+
+		while (i < (separated.size() -1))
+		{
+			if (separated[i] != " " && separated[i] != "")
+			{
+				numbers.push_back(separated[i]);
+			}
+			i++;
+		}
+		*/
 	srand(time(NULL));
 	string temp;
 	string file_name;
@@ -114,46 +114,52 @@ int main()
 	getline(fin, max_val);
 	fout << max_val << endl;
 
+	int tot_width = stoi(width) * 3;
+
 	vector<vector<string>> numbers{};
-	string temp;
+	temp = "";
 	int i = 1;
 	int x = 0;
 	string temporary;
+	vector<string> data{};
 	while (fin.good())
 	{
-		vector<string> data{};
-		for (i = 1; i <= (stoi(width) * 3); i++)
+		getline(fin, temp);
+		stringstream ss;
+		ss << temp;
+		while (ss.good())
 		{
-			getline(fin, temp);
-			stringstream ss;
-			ss << temp;
-			while (ss.good())
+			getline(ss, temporary, ' ');
+			if (temporary != " " && temporary != "")
 			{
-				getline(ss, temporary, ' ');
-				if (temporary != " " && temporary != "")
+				data.push_back(temporary);
+
+				if (data.size() == tot_width)
 				{
-					data.push_back(temporary);
+					numbers.push_back(data);
+					data = vector<string>{};
 				}
+				
 			}
 		}
-		numbers.push_back(data);
+		
 	}
 
 
-	
+
 	bool _continue = true;
 	char user_input = 'y';
-	
+
 	int j = 0;
 	while (_continue)
 	{
-	
+
 		cout << "What should I do to the image?" << endl;
 		cout << "1. Remove Red" << endl << "2. Remove Blue" << endl;
 		cout << "3. Remove Green" << endl << "4. Negate Red" << endl;
 		cout << "5. Negate Blue" << endl << "6. Negate Green" << endl;
 		cout << "7. Set to Grayscale" << endl << "8. Random noise" << endl;
-		cout << "9. High contrast" << endl;
+		cout << "9. High contrast" << endl << "10. Flip horizontally" << endl;
 		cin >> set_effect;
 
 		i = 0;
@@ -162,6 +168,7 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
+				j = 0;
 				while (j < (stoi(width) * 3))
 				{
 					if (j % 3 == 0)
@@ -180,7 +187,8 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
-				while (j < stoi(width) * 3)
+				j = 0;
+				while (j < tot_width)
 				{
 					if ((j - 1) % 3 == 0)
 					{
@@ -199,7 +207,8 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
-				while (j < stoi(width) * 3)
+				j = 0;
+				while (j < tot_width)
 				{
 					if ((j - 2) % 3 == 0)
 					{
@@ -219,7 +228,8 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
-				while (j < stoi(width) * 3)
+				j = 0;
+				while (j < tot_width)
 				{
 					if ((j) % 3 == 0)
 					{
@@ -240,8 +250,9 @@ int main()
 		if (set_effect == 5)
 		{
 			while (i < (numbers.size() - 1))
-			{	
-				while (j < stoi(width) * 3)
+			{
+				j = 0;
+				while (j < tot_width)
 				{
 					if ((j - 1) % 3 == 0)
 					{
@@ -261,7 +272,8 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
-				while (j < stoi(width) * 3)
+				j = 0;
+				while (j < tot_width)
 				{
 					if ((j - 2) % 3 == 0)
 					{
@@ -280,8 +292,9 @@ int main()
 		if (set_effect == 7)
 		{
 			while (i < (numbers.size() - 1))
-			{	
-				while (j < stoi(width) * 3)
+			{
+				j = 0;
+				while (j < tot_width)
 				{
 					if (j % 3 == 0)
 					{
@@ -308,7 +321,8 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
-				while(j < stoi(width)*3)
+				j = 0;
+				while (j < tot_width)
 				{
 					if (j % 3 == 0)
 					{
@@ -348,8 +362,8 @@ int main()
 						numbers[i][j + 1] = to_string(num_2);
 						numbers[i][j + 2] = to_string(num_3);
 					}
-				j++;
-			}
+					j++;
+				}
 				i++;
 			}
 		}
@@ -360,7 +374,8 @@ int main()
 		{
 			while (i < (numbers.size() - 1))
 			{
-				while (j < stoi(width) * 3)
+				j = 0;
+				while (j < tot_width)
 				{
 					if (stoi(numbers[i][j]) > 127)
 					{
@@ -376,6 +391,30 @@ int main()
 			}
 		}
 
+		i = 0;
+
+		if (set_effect == 10)
+		{
+			while (i < (numbers.size() - 1))
+			{
+				j = 0;
+				vector<string> tp;
+				while (j < tot_width)
+				{
+					if (j % 3 == 0)
+					{
+						tp.push_back(numbers[i][tot_width - (j + 3)]);
+						tp.push_back(numbers[i][tot_width - (j + 2)]);
+						tp.push_back(numbers[i][tot_width - (j + 1)]);
+					}
+
+					j++;
+				}
+				numbers[i] = tp;
+				i++;
+			}
+		}
+
 		cout << "would you like to continue? (y to continue anything else to quit)" << endl;
 		cin >> user_input;
 
@@ -386,20 +425,24 @@ int main()
 
 	}
 
+	i = 0;
+
 	for (i = 0; i < numbers.size(); i++)
 	{
-		while (j < stoi(width) * 3)
+		j = 0;
+		while (j < tot_width)
 		{
 			fout << numbers[i][j] << " ";
 
-			if (i % 3 == 0)
-			{
-				fout << endl;
-			}
+
 			j++;
 		}
+		fout << endl;
 	}
-	
+
+
+
+
 
 	fin.close();
 	fout.close();
