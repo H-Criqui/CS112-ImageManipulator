@@ -160,6 +160,7 @@ int main()
 		cout << "5. Negate Blue" << endl << "6. Negate Green" << endl;
 		cout << "7. Set to Grayscale" << endl << "8. Random noise" << endl;
 		cout << "9. High contrast" << endl << "10. Flip horizontally" << endl;
+		cout << "11. Flip vertically" << endl;
 		cin >> set_effect;
 
 		i = 0;
@@ -414,6 +415,33 @@ int main()
 				i++;
 			}
 		}
+
+
+		i = 0;
+		int p = 0;
+		if (set_effect == 11)
+		{
+			vector<vector<string>> other;
+			while (i < numbers.size())
+			{
+				j = 0;
+				vector<string> tp;
+				while (j < tot_width)
+				{
+					tp.push_back(numbers[numbers.size() - (i + 1)][j]);
+					j++;
+				}
+				other.push_back(tp);
+				i++;
+			}
+			i = 0;
+			while (i < numbers.size())
+			{
+				numbers[i] = other[i];
+				i++;
+			}
+		}
+
 
 		cout << "would you like to continue? (y to continue anything else to quit)" << endl;
 		cin >> user_input;
