@@ -108,11 +108,9 @@ int main()
 	getline(fin, file_type);
 	fout << file_type << endl;
 	getline(fin, width, ' ');
-	fout << width << ' ';
 	getline(fin, height);
-	fout << height << endl;
 	getline(fin, max_val);
-	fout << max_val << endl;
+	
 
 	int tot_width = stoi(width) * 3;
 
@@ -146,10 +144,10 @@ int main()
 	}
 
 
-
+	int flip_width;
 	bool _continue = true;
 	char user_input = 'y';
-
+	int flip_counter = 0;
 	int j = 0;
 	while (_continue)
 	{
@@ -442,7 +440,123 @@ int main()
 			}
 		}
 
+		i = 0;
+		j = 0;
+		if (set_effect == 12)
+		{
+			while (i < numbers.size())
+			{
+				j = 0;
+				while (j < tot_width)
+				{
+					if (j <= 2)
+					{
+						numbers[i][j] = to_string((stoi(numbers[i][j]) + stoi(numbers[i][3])) / 2);
+					}
+					else if (j > tot_width - 4)
+					{
+						numbers[i][j] = to_string((stoi(numbers[i][j]) + stoi(numbers[i][j - 3])) / 2);
+					}
+					else
+					{
+						numbers[i][j] = to_string( (stoi(numbers[i][j]) + stoi(numbers[i][j + 3]) + stoi(numbers[i][j - 3])) / 3);
+					}
+					j++;
+				}
+				i++;
+			}
 
+			i = 0;
+			while (i < numbers.size())
+			{
+				j = 0;
+				while (j < tot_width)
+				{
+					if (i == 0)
+					{
+						numbers[i][j] = to_string((stoi(numbers[i][j]) + stoi(numbers[1][j])) / 2);
+					}
+					else if (i == numbers.size() - 1)
+					{
+						numbers[i][j] = to_string( (stoi(numbers[i][j]) + stoi(numbers[i - 1][j]) ) / 2);
+					}
+					else
+					{
+						numbers[i][j] = to_string( (stoi(numbers[i][j]) + stoi(numbers[i - 1][j]) + stoi(numbers[i + 1][j])) / 3);
+					}
+					j++;
+				}
+				i++;
+			}
+		}
+	
+
+
+		i = 0;
+		j = 0;
+		if (set_effect == 13)
+		{
+			while (i < numbers.size())
+			{
+				if (i % 2 == 0)
+				{
+					j = 0;
+					while (j < tot_width - 1)
+					{
+						if (j % 6 == 0)
+						{
+							string pix_val=numbers[i][j];
+							string pix_val2 = numbers[i][j + 1];
+							string pix_val3 = numbers[i][j + 2];
+							numbers[i][j + 3] = pix_val;
+							numbers[i][j + 4] = pix_val2;
+							numbers[i][j + 5] = pix_val3;
+							numbers[i + 1][j] = pix_val;
+							numbers[i + 1][j + 1] = pix_val2;
+							numbers[i + 1][j + 2] = pix_val3;
+							numbers[i + 1][j + 3] = pix_val;
+							numbers[i + 1][j + 4] = pix_val2;
+							numbers[i + 1][j + 5] = pix_val3;
+						
+						}
+						j++;
+					}
+				}
+				i++;
+			}
+		}
+
+		vector<vector<string>> temp_;
+		j = 0;
+		if (set_effect == 14)
+		{
+			flip_width = numbers.size();
+			
+			while (j < tot_width)
+			{
+				vector<string> rot_;
+				i = 0;
+				
+					while (i < numbers.size())
+					{
+						if (j % 3 == 0) 
+						{
+							rot_.push_back(numbers[i][j]);
+							rot_.push_back(numbers[i][j + 1]);
+							rot_.push_back(numbers[i][j + 2]);
+						}
+						i++;
+					}
+					if (j % 3 == 0)
+					{
+						temp_.push_back(rot_);
+					}
+					j++;
+			}
+
+			numbers = temp_;
+			flip_counter++;
+		}
 		cout << "would you like to continue? (y to continue anything else to quit)" << endl;
 		cin >> user_input;
 
@@ -455,18 +569,40 @@ int main()
 
 	i = 0;
 
-	for (i = 0; i < numbers.size(); i++)
+
+	if (flip_counter % 2 == 0)
 	{
-		j = 0;
-		while (j < tot_width)
+		fout << width << " " << height;
+		for (i = 0; i < numbers.size(); i++)
 		{
-			fout << numbers[i][j] << " ";
+			j = 0;
+			while (j < tot_width)
+			{
+				fout << numbers[i][j] << " ";
 
 
-			j++;
+				j++;
+			}
+			fout << endl;
 		}
-		fout << endl;
 	}
+	else
+	{
+		fout << height << " " << width << endl;
+		fout << max_val << endl;
+		for (i = 0; i < numbers.size(); i++)
+		{
+			j = 0;
+			while (j < flip_width)
+			{
+				fout << numbers[i][j] << " ";
+				j++;
+			}
+		fout << endl;
+		}
+	}
+
+	
 
 
 
