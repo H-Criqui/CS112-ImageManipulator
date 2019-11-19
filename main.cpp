@@ -111,7 +111,7 @@ int main()
 	getline(fin, height);
 	getline(fin, max_val);
 	
-
+	
 	int tot_width = stoi(width) * 3;
 
 	vector<vector<string>> numbers{};
@@ -158,7 +158,8 @@ int main()
 		cout << "5. Negate Blue" << endl << "6. Negate Green" << endl;
 		cout << "7. Set to Grayscale" << endl << "8. Random noise" << endl;
 		cout << "9. High contrast" << endl << "10. Flip horizontally" << endl;
-		cout << "11. Flip vertically" << endl;
+		cout << "11. Flip vertically" << endl << "12. blur" << endl;
+		cout << "13. Pixilate" << endl << "14. Rotate right" << endl;
 		cin >> set_effect;
 
 		i = 0;
@@ -490,7 +491,7 @@ int main()
 			}
 		}
 	
-
+		flip_width = numbers.size();
 
 		i = 0;
 		j = 0;
@@ -525,19 +526,29 @@ int main()
 				i++;
 			}
 		}
+		int j_counter;
+		if (flip_counter % 2 == 0)
+		{
+			j_counter = tot_width;
+		}
+		else
+		{
+			j_counter = stoi(height)*3;
+		}
+
 
 		vector<vector<string>> temp_;
 		j = 0;
 		if (set_effect == 14)
 		{
-			flip_width = numbers.size();
+
 			
-			while (j < tot_width)
+			while (j < j_counter)
 			{
 				vector<string> rot_;
-				i = 0;
+				i = numbers.size()-1;
 				
-					while (i < numbers.size())
+					while (i >= 0)
 					{
 						if (j % 3 == 0) 
 						{
@@ -545,7 +556,7 @@ int main()
 							rot_.push_back(numbers[i][j + 1]);
 							rot_.push_back(numbers[i][j + 2]);
 						}
-						i++;
+						i--;
 					}
 					if (j % 3 == 0)
 					{
@@ -568,11 +579,12 @@ int main()
 	}
 
 	i = 0;
-
+	j = 0;
 
 	if (flip_counter % 2 == 0)
 	{
-		fout << width << " " << height;
+		fout << width << " " << height << endl;
+		fout << max_val << endl;
 		for (i = 0; i < numbers.size(); i++)
 		{
 			j = 0;
@@ -593,7 +605,7 @@ int main()
 		for (i = 0; i < numbers.size(); i++)
 		{
 			j = 0;
-			while (j < flip_width)
+			while (j < flip_width*3)
 			{
 				fout << numbers[i][j] << " ";
 				j++;
