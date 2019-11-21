@@ -160,6 +160,7 @@ int main()
 		cout << "9. High contrast" << endl << "10. Flip horizontally" << endl;
 		cout << "11. Flip vertically" << endl << "12. blur" << endl;
 		cout << "13. Pixilate" << endl << "14. Rotate right" << endl;
+		cout << "15. ??? (note: use as last effect only)" << endl;
 		cin >> set_effect;
 
 		i = 0;
@@ -580,8 +581,22 @@ int main()
 
 	i = 0;
 	j = 0;
-
-	if (flip_counter % 2 == 0)
+	if(set_effect == 15)
+	{
+		fout << width << " " << height << endl;
+		fout << max_val << endl;
+		for (i = 0; i < numbers.size(); i++)
+		{
+			j = 0;
+			while (j < tot_width - 3)
+			{
+				fout << numbers[i][j] << " ";
+				j++;
+			}
+			fout << endl;
+		}
+	}
+	else if (flip_counter % 2 == 0)
 	{
 		fout << width << " " << height << endl;
 		fout << max_val << endl;
